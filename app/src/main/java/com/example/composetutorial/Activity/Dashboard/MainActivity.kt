@@ -15,9 +15,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import com.example.composetutorial.Activity.BaseActivity
 import com.example.composetutorial.Domain.BannerModel
+import com.example.composetutorial.Domain.CategoryModel
 import com.example.composetutorial.ViewModel.MainViewModel
 
 class MainActivity : BaseActivity() {
@@ -36,8 +38,10 @@ fun MainScreen(){
     val viewModel = MainViewModel()
 
     val banners= remember { mutableStateListOf<BannerModel>() }
+    val categories = remember { mutableStateListOf<CategoryModel>() }
 
     var showBannerLoading by remember { mutableStateOf(true) }
+    var showCategoryLoading by remember { mutableStateOf(true) }
 
 
     LaunchedEffect(Unit) {
@@ -45,6 +49,14 @@ fun MainScreen(){
             banners.clear()
             banners.addAll(it)
             showBannerLoading = false
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadCategory().observeForever{
+            categories.clear()
+            categories.addAll(it)
+            showCategoryLoading = false
         }
     }
 
@@ -68,6 +80,12 @@ fun MainScreen(){
             item {
                 Search()
             }
+
+            item {
+                CategorySection(categories,showCategoryLoading)
+            }
         }
     }
 }
+
+
