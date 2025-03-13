@@ -1,5 +1,6 @@
 package com.example.composetutorial.Activity.Dashboard
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +24,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
+import com.example.composetutorial.Activity.ItemsList.ItemsListActivity
 import com.example.composetutorial.Domain.CategoryModel
 import com.example.composetutorial.R
 
@@ -69,7 +72,11 @@ fun CategorySection(categories: SnapshotStateList<CategoryModel>, showCategoryLo
                                 .weight(1f)
                                 .padding(horizontal = 8.dp),
                             onItemClick = {
-
+                                val intent= Intent(context,ItemsListActivity::class.java).apply {
+                                    putExtra("id",categoryModel.Id.toString())
+                                    putExtra("title", categoryModel.Name)
+                                }
+                                startActivity(context,intent,null)
                             }
                         )
                     }
