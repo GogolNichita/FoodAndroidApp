@@ -1,5 +1,6 @@
 package com.example.composetutorial.Activity.ItemsList
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
+import com.example.composetutorial.Activity.DetailEachFood.DetailEachFoodActivity
 import com.example.composetutorial.Domain.FoodModel
 import com.example.composetutorial.R
 
@@ -53,7 +56,10 @@ fun Items(item: FoodModel, index: Int){
             .background(colorResource(R.color.grey), shape=RoundedCornerShape(10.dp))
             .wrapContentHeight()
             .clickable {
-
+                val intent= Intent(context, DetailEachFoodActivity::class.java).apply {
+                  putExtra("object", item)
+                }
+                startActivity(context,intent,null)
             }
     ){
         if(isEvenRow){
